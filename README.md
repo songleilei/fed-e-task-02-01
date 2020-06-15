@@ -31,7 +31,7 @@
 
 1、概述脚手架实现的过程，并使用 NodeJS 完成一个自定义的小型脚手架工具
 
-简要实现过程：
+#### 实现过程：
 
 - package.json 定义脚手架命令及入口文件
 
@@ -49,7 +49,7 @@
 
 - 创建模板文件，使用 fs.readdir 遍历模板文件夹, fs.writeFile 写入指定文件内容。
 
-实现代码：code-01 文件夹
+#### 实现代码：code-01 文件夹
 
 2、尝试使用 Gulp 完成 [项目](https://github.com/lagoufed/fed-e-code/blob/master/part-02/module-01/作业案例基础代码.zip?raw=true) 的自动化构建
 
