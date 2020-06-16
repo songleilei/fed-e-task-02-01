@@ -1,7 +1,7 @@
 module.exports = function (name) {
   const template = `
 {
-  "name": ${name},
+  "name": '${name}',
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
