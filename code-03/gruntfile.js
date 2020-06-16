@@ -6,15 +6,15 @@ const data = {
     {
       name: "Home",
       icon: "aperture",
-      link: "index.html"
+      link: "index.html",
     },
     {
       name: "Features",
-      link: "features.html"
+      link: "features.html",
     },
     {
       name: "About",
-      link: "about.html"
+      link: "about.html",
     },
     {
       name: "Contact",
@@ -22,96 +22,146 @@ const data = {
       children: [
         {
           name: "Twitter",
-          link: "https://twitter.com/"
+          link: "https://twitter.com/",
         },
         {
           name: "About",
-          link: "https://weibo.com/"
+          link: "https://weibo.com/",
         },
         {
-          name: "divider"
+          name: "divider",
         },
         {
           name: "About",
-          link: "https://github.com/"
-        }
-      ]
-    }
+          link: "https://github.com/",
+        },
+      ],
+    },
   ],
   pkg: require("./package.json"),
-  date: new Date()
+  date: new Date(),
 };
 
-module.exports = grunt => {
+module.exports = (grunt) => {
   grunt.initConfig({
-    clean: { temp: "temp/**" },
+    clean: { dist: "dist/**" },
     sass: {
       options: {
-        implementation: sass
+        implementation: sass,
       },
       main: {
-        files: {
-          "dist/assets/styles/main.css": "src/assets/styles/main.scss"
-        }
-      }
+        files: [
+          {
+            expand: true,
+            cwd: "src",
+            src: ["assets/styles/*.scss"],
+            dest: "dist",
+            ext: ".css",
+          },
+        ],
+      },
     },
     babel: {
       options: {
-        presets: ["@babel/preset-env"]
+        presets: ["@babel/preset-env"],
       },
       main: {
-        files: {
-          "dist/assets/scripts/main.js": "src/assets/scripts/main.js"
-        }
-      }
+        files: [
+          {
+            expand: true,
+            cwd: "src",
+            src: ["assets/scripts/*.js"],
+            dest: "dist",
+          },
+        ],
+      },
     },
+
     swig: {
       development: {
-        init: {
-          allowErrors: false,
-          autoescape: true
-        },
+        src: ["src/*.swig"],
         dest: "dist",
-        src: ["src/*.html"],
-        test: data
-      }
-    },
-    imagemin: {
-      options: {
-        optimizationLevel: 3
+        test: data,
       },
-      main: {
-        files: {
-          "dist/assets/images/brands.svg": "src/assets/images/brands.svg",
-          "dist/assets/images/logo.png": "src/assets/images/logo.png"
-        }
-      }
     },
 
-    // copy
+    imagemin: {
+      main: {
+        files: [
+          {
+            expand: true,
+            cwd: "src/",
+            src: ["assets/images/*"],
+            dest: "dist/",
+          },
+          {
+            expand: true,
+            cwd: "src/",
+            src: ["assets/fonts/*"],
+            dest: "dist/",
+          },
+        ],
+      },
+    },
 
-    // 启动web
+    copy: {
+      main: {
+        expand: true,
+        cwd: "public",
+        src: "**",
+        dest: "dist",
+      },
+    },
+
+    browserSync: {
+      bsFiles: {
+        src: "src/assets/**",
+      },
+      options: {
+        notify: false,
+        watchTask: true,
+        files: "dist/**",
+        server: {
+          baseDir: "dist",
+          routes: {
+            "/node_modules": "node_modules",
+          },
+        },
+      },
+    },
 
     watch: {
       js: {
         files: ["src/assets/scripts/*.js"],
-        tasks: ["babel"]
+        tasks: ["babel"],
       },
       css: {
         files: ["src/assets/styles/*.scss"],
-        tasks: ["sass"]
-      }
+        tasks: ["sass"],
+      },
     },
 
     // useref
-    useref: {
-      // specify which files contain the build blocks
-      html: "dist/*.html",
-      // explicitly specify the temp directory you are working in
-      // this is the the base of your links ( "/" )
-      temp: "dist"
-    }
+    // useref: {
+    //   // specify which files contain the build blocks
+    //   html: "dist/*.html",
+    //   // explicitly specify the temp directory you are working in
+    //   // this is the the base of your links ( "/" )
+    //   temp: "dist",
+    // },
   });
+
+  grunt.registerTask("clean", ["clean"]);
+
+  grunt.registerTask("serve", [
+    "sass",
+    "babel",
+    "swig",
+    "imagemin",
+    "copy",
+    "browserSync",
+    "watch",
+  ]);
 
   loadGruntTasks(grunt);
 };
