@@ -5,8 +5,7 @@
   "description": "Always a pleasure scaffolding your awesome static sites.",
   "scripts": {
     "clean": "grunt clean",
-    "serve": "grunt serve",
-    "build": "grunt build"
+    "serve": "grunt serve"
   },
   "browserslist": [
     "last 1 version",
