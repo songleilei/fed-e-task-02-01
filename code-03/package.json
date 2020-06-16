@@ -5,9 +5,8 @@
   "description": "Always a pleasure scaffolding your awesome static sites.",
   "scripts": {
     "clean": "grunt clean",
-    "watch": "browser-sync . --files \"dist\"",
-    "build": "grunt build",
-    "serve": "run-p build serve"
+    "serve": "grunt serve",
+    "build": "grunt build"
   },
   "browserslist": [
     "last 1 version",
@@ -23,8 +22,6 @@
   "devDependencies": {
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
-    "browser-sync": "^2.26.7",
-    "del": "^5.1.0",
     "grunt": "^1.1.0",
     "grunt-babel": "^8.0.0",
     "grunt-contrib-clean": "^2.0.0",
@@ -35,7 +32,6 @@
     "grunt-swig": "^0.2.1",
     "grunt-useref": "0.0.16",
     "load-grunt-tasks": "^5.1.0",
-    "npm-run-all": "^4.1.5",
     "sass": "^1.26.8"
   },
   "engines": {

@@ -65,27 +65,6 @@ module.exports = grunt => {
         }
       }
     },
-    imagemin: {
-      options: {
-        optimizationLevel: 3
-      },
-      main: {
-        files: {
-          "dist/assets/images/brands.svg": "src/assets/images/brands.svg",
-          "dist/assets/images/logo.png": "src/assets/images/logo.png"
-        }
-      }
-    },
-    watch: {
-      js: {
-        files: ["src/assets/scripts/*.js"],
-        tasks: ["babel"]
-      },
-      css: {
-        files: ["src/assets/styles/*.scss"],
-        tasks: ["sass"]
-      }
-    },
     swig: {
       development: {
         init: {
@@ -97,6 +76,34 @@ module.exports = grunt => {
         test: data
       }
     },
+    imagemin: {
+      options: {
+        optimizationLevel: 3
+      },
+      main: {
+        files: {
+          "dist/assets/images/brands.svg": "src/assets/images/brands.svg",
+          "dist/assets/images/logo.png": "src/assets/images/logo.png"
+        }
+      }
+    },
+
+    // copy
+
+    // 启动web
+
+    watch: {
+      js: {
+        files: ["src/assets/scripts/*.js"],
+        tasks: ["babel"]
+      },
+      css: {
+        files: ["src/assets/styles/*.scss"],
+        tasks: ["sass"]
+      }
+    },
+
+    // useref
     useref: {
       // specify which files contain the build blocks
       html: "dist/*.html",
@@ -107,6 +114,4 @@ module.exports = grunt => {
   });
 
   loadGruntTasks(grunt);
-
-  grunt.registerTask("default", ["sass", "babel", "watch"]);
 };
